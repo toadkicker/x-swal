@@ -127,17 +127,17 @@ The `x-swal` element that display an alternative for alert() javascript-function
          */
         active: function (cb) {
           swal({
-            title: this.title || '',
-            text: this.text || '',
-            type: this.type || '',
+            title: this.title,
+            text: this.text,
+            type: this.type,
             showCancelButton: this.showCancelButton,
-            confirmButtonColor: this.confirmButtonColor || '#AEDEF4',
-            cancelButtonColor: this.confirmButtonColor || '#D0D0D0',
-            confirmButtonText: this.confirm || 'Ok',
-            cancelButtonText: this.cancel || 'Cancel',
+            confirmButtonColor: this.confirmButtonColor,
+            cancelButtonColor: this.confirmButtonColor,
+            confirmButtonText: this.confirm,
+            cancelButtonText: this.cancel,
             closeOnConfirm: this.closeOnConfirm,
             closeOnCancel: this.closeOnCancel,
-            imageUrl: this.img || ''
+            imageUrl: this.img
           }, function (isConfirm) {
             this.fire('confirmation', isConfirm);
             if (cb && typeof cb === "function") {
