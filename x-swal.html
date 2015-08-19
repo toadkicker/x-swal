@@ -99,10 +99,15 @@ The `x-swal` element that display an alternative for alert() javascript-function
             if(tagName === 'img' && src){
               textContent = src;
 
-            }else if(tagName === 'confirm'){
+            } else if(tagName === 'confirm'){
               var color = m.getAttribute('color');
               if(color){
                 this.confirmButtonColor = color;
+              }
+              else if(tagName === 'cancel'){
+              var color = m.getAttribute('color');
+              if(color){
+                this.cancelButtonColor = color;
               }
             }
             this[tagName] = textContent;
@@ -126,6 +131,7 @@ The `x-swal` element that display an alternative for alert() javascript-function
             type: this.type || '',
             showCancelButton: this.showCancelButton,
             confirmButtonColor: this.confirmButtonColor || '#AEDEF4',
+            cancelButtonColor: this.confirmButtonColor || '#D0D0D0',
             confirmButtonText: this.confirm || 'Ok',
             cancelButtonText: this.cancel || 'Cancel',
             closeOnConfirm: this.closeOnConfirm,
