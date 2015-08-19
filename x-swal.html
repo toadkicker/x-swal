@@ -104,14 +104,14 @@ The `x-swal` element that display an alternative for alert() javascript-function
               if (color) {
                 this.confirmButtonColor = color;
               }
-              else if (tagName === 'cancel') {
-                var color = m.getAttribute('color');
-                if (color) {
-                  this.cancelButtonColor = color;
-                }
-              }
-              this[tagName] = textContent;
             }
+            else if (tagName === 'cancel') {
+              var color = m.getAttribute('color');
+              if (color) {
+                this.cancelButtonColor = color;
+              }
+            }
+            this[tagName] = textContent;
           }
         },
         autoChanged: function (oldVal, newVal) {
