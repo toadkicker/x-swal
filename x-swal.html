@@ -22,21 +22,49 @@ The `x-swal` element that display an alternative for alert() javascript-function
 -->
 
 
-<polymer-element name="x-swal" attributes="type">
+<dom-module id="x-swal">
+  <style>
+    :host {
+      display: none;
+    }
+  </style>
   <template>
-    <style>
-      :host {
-        display: none;
-      }
-    </style>
     <content id="title" select="title, text, confirm, cancel, img"></content>
   </template>
   <script>
     (function () {
       'use strict';
-
       Polymer({
-        publish: {
+        is: 'x-swal',
+        properties: {
+          /**
+           * If set to <strong>true</strong>, the user can dismiss the modal by
+           * clicking outside it.
+           *
+           * @property allowOutsideClick
+           * @type boolean
+           * @default false
+           */
+          allowOutsideClick: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+          auto: { observer: 'autoChanged' },
+          /**
+           * Set to <i>false</i> if you want the modal to stay open even if the
+           * user presses the "Cancel"-button. This is especially useful if the
+           * function attached to the "Cancel"-button is another SweetAlert.
+           *
+           * @property closeOnCancel
+           * @type boolean
+           * @default true
+           */
+          closeOnCancel: {
+            type: Boolean,
+            value: true,
+            notify: true
+          },
           // auto: false,
           /**
            * Set to <i>false</i> if you want the modal to stay open even if the
@@ -48,34 +76,10 @@ The `x-swal` element that display an alternative for alert() javascript-function
            * @default false
            */
           closeOnConfirm: {
-            value: false
+            type: Boolean,
+            value: false,
+            notify: true
           },
-
-          /**
-           * If set to <strong>true</strong>, the user can dismiss the modal by
-           * clicking outside it.
-           *
-           * @property allowOutsideClick
-           * @type boolean
-           * @default false
-           */
-          allowOutsideClick: {
-            value: false
-          },
-
-          /**
-           * Set to <i>false</i> if you want the modal to stay open even if the
-           * user presses the "Cancel"-button. This is especially useful if the
-           * function attached to the "Cancel"-button is another SweetAlert.
-           *
-           * @property closeOnCancel
-           * @type boolean
-           * @default true
-           */
-          closeOnCancel: {
-            value: true
-          },
-
           /**
            * If set to <strong>true</strong>, a "Cancel"-button will be shown,
            * which the user can click on to dismiss the modal.
@@ -85,41 +89,37 @@ The `x-swal` element that display an alternative for alert() javascript-function
            * @default false
            */
           showCancelButton: {
-            value: false
-          }
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+          type: { notify: true }
         },
         attached: function (document) {
-          this.elements = Array.prototype.slice.call(
-              this.$.title.getDistributedNodes()
-          );
+          this.elements = Array.prototype.slice.call(Polymer.dom(this.$.title).getDistributedNodes());
           for (var a = 0, m; m = this.elements[a]; ++a) {
-            var src = m.getAttribute('src'),
-                tagName = m.localName,
-                textContent = m.innerHTML;
+            var src = m.getAttribute('src'), tagName = m.localName, textContent = Polymer.dom(m).innerHTML;
             if (tagName === 'img' && src) {
               textContent = src;
-
             } else if (tagName === 'confirm') {
               var color = m.getAttribute('color');
               if (color) {
                 this.confirmButtonColor = color;
               }
-            }
-            else if (tagName === 'cancel') {
+            } else if (tagName === 'cancel') {
               var color = m.getAttribute('color');
               if (color) {
                 this.cancelButtonColor = color;
               }
             }
-            this[tagName] = textContent;
+            this.set(tagName, textContent);
           }
         },
-        autoChanged: function (oldVal, newVal) {
+        autoChanged: function (newVal, oldVal) {
           if (newVal) {
             this.active();
           }
         },
-
         /**
          * Active the alert.
          *
@@ -140,13 +140,13 @@ The `x-swal` element that display an alternative for alert() javascript-function
             imageUrl: this.img
           }, function (isConfirm) {
             this.fire('confirmation', isConfirm);
-            if (cb && typeof cb === "function") {
+            if (cb && typeof cb === 'function') {
               return cb(isConfirm);
             }
             return;
           }.bind(this));
         }
       });
-    })(document);
+    }(document));
   </script>
-</polymer-element>
+</dom-module>

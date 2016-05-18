@@ -14,6 +14,7 @@
     "swal",
     "sweet",
     "sweetAlert",
+    "sweetAlert2",
     "alert"
   ],
   "license": "MIT",
@@ -28,7 +29,7 @@
     "gulpfile.js"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#>=0.3.3",
-    "sweetalert2": "~0.2.2"
+    "polymer": "Polymer/polymer#>=1.0.0",
+    "sweetalert2": "https://github.com/limonte/sweetalert2.git#master"
   }
 }
